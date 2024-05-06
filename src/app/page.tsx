@@ -8,50 +8,47 @@ const Loading = () => {
   return <div className="loading">Loading…</div>;
 };
 
-const Codeword = ({ codeword }) => {
+const Typewriter = ({ text }) => {
   const DELAY_MS = 500; // half a second
   const [index, setIndex] = useState(0); // show nothing at first
 
   useEffect(() => {
-    if (index < codeword.length) {
+    if (index < text.length) {
       const timeoutId = setTimeout(() => {
-        // console.log(`Setting ${index + 1}`)
         setIndex(index + 1);
       }, DELAY_MS);
     }
   }, [index]);
 
   return (
-      <ul className="codeword">
-        {codeword
+      <ol className="typewriter">
+        {text
             .substring(0, index)
             .split("")
             .map((char: string, i: number) => (
-                <li className="codeword-char" key={i}>
+                <li className="typewriter-char" key={i}>
                   {char}
                 </li>
             ))}
-      </ul>
+      </ol>
   );
 };
 
 export default function App() {
   const API_URL =
       "https://wgg522pwivhvi5gqsn675gth3q0otdja.lambda-url.us-east-1.on.aws/626f6e";
-  const [codeword, setCodeword] = useState();
+  const [text, setText] = useState();
 
   useEffect(() => {
-    fetchCodeword().then((body: string) => setCodeword(body));
+    fetchText().then((body: string) => setText(body));
   }, []);
 
-  const fetchCodeword = async (): Promise<string> => {
+  const fetchText = async (): Promise<string> => {
     const response = await fetch(API_URL);
     return response.text();
   };
 
   return (
-      <div className="App">
-        {codeword ? <Codeword codeword={codeword} /> : <Loading />}
-      </div>
+      <div className="App">{text ? <Typewriter text={text} /> : <Loading />}</div>
   );
 }
