@@ -8,7 +8,10 @@ const Loading = () => {
   return <div className="loading">Loading…</div>;
 };
 
-const Typewriter = ({ text }) => {
+interface TypewriterProps {
+  text: string;
+}
+const Typewriter = ({ text }: TypewriterProps) => {
   const DELAY_MS = 500; // half a second
   const [index, setIndex] = useState(0); // show nothing at first
 
