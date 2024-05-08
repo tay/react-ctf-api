@@ -21,7 +21,7 @@ const Typewriter = ({ text }: TypewriterProps) => {
         setIndex(index + 1);
       }, DELAY_MS);
     }
-  }, [index]);
+  }, [text, index]);
 
   return (
       <ol className="typewriter">
@@ -40,7 +40,7 @@ const Typewriter = ({ text }: TypewriterProps) => {
 export default function App() {
   const API_URL =
       "https://wgg522pwivhvi5gqsn675gth3q0otdja.lambda-url.us-east-1.on.aws/626f6e";
-  const [text, setText] = useState();
+  const [text, setText] = useState<string | null>(null);
 
   useEffect(() => {
     fetchText().then((body: string) => setText(body));
